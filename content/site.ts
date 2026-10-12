@@ -23,9 +23,9 @@ export type Post =
     };
 
 export const SITE = {
-  name: "你的名字",
+  name: "xixikawaii",
   bio: "just some human ✦ 记录一些碎片",
-  avatar: "/media/avatar.svg",
+  avatar: "/media/avatar.jpg",
   links: [
     { type: "instagram", url: "https://instagram.com/" },
     { type: "x", url: "https://x.com/" },
@@ -47,14 +47,13 @@ export const POSTS: Post[] = [
     type: "photo",
     date: "2026-10-10",
     caption: "周末散步随手拍",
-    photos: ["/media/photo-1.svg", "/media/photo-2.svg", "/media/photo-3.svg"],
+    photos: ["/media/photo-1.jpg", "/media/photo-2.jpg", "/media/photo-3.jpg"],
   },
   {
     type: "video",
     date: "2026-10-08",
-    caption: "一段小视频 —— 把 mp4 放进 public/media 然后填 src",
-    src: "",
-    poster: "/media/video-cover.svg",
+    caption: "一段小视频 🎬",
+    src: "/media/video.mp4",
   },
   {
     type: "text",

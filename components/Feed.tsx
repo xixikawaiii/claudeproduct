@@ -12,6 +12,31 @@ const TABS = [
 
 type TabKey = (typeof TABS)[number]["key"];
 
+function chunk<T>(arr: T[], n: number): T[][] {
+  const out: T[][] = [];
+  for (let i = 0; i < arr.length; i += n) out.push(arr.slice(i, i + n));
+  return out;
+}
+
+/** 按图片原始宽高比分配宽度，同一行等高，不裁切 */
+function Thumb({ src, alt, onOpen }: { src: string; alt: string; onOpen: () => void }) {
+  const [ratio, setRatio] = useState(1);
+  return (
+    <button className="thumb" style={{ flex: `${ratio} 1 0`, aspectRatio: ratio }} onClick={onOpen}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        ref={(img) => {
+          if (img?.complete && img.naturalWidth) setRatio(img.naturalWidth / img.naturalHeight);
+        }}
+        onLoad={(e) => setRatio(e.currentTarget.naturalWidth / e.currentTarget.naturalHeight)}
+      />
+    </button>
+  );
+}
+
 export default function Feed({ posts }: { posts: Post[] }) {
   const [tab, setTab] = useState<TabKey>("all");
   const [lightbox, setLightbox] = useState<{ photos: string[]; i: number } | null>(null);
@@ -55,12 +80,18 @@ export default function Feed({ posts }: { posts: Post[] }) {
 
             {p.type === "photo" && (
               <>
-                <div className={`grid n${Math.min(p.photos.length, 3)}`}>
-                  {p.photos.map((src, i) => (
-                    <button key={src} className="thumb" onClick={() => setLightbox({ photos: p.photos, i })}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={src} alt={p.caption ?? ""} loading="lazy" />
-                    </button>
+                <div className="gallery">
+                  {chunk(p.photos, 3).map((row, r) => (
+                    <div key={r} className="row">
+                      {row.map((src, j) => (
+                        <Thumb
+                          key={src}
+                          src={src}
+                          alt={p.caption ?? ""}
+                          onOpen={() => setLightbox({ photos: p.photos, i: r * 3 + j })}
+                        />
+                      ))}
+                    </div>
                   ))}
                 </div>
                 {p.caption && <p className="caption">{p.caption}</p>}
