@@ -22,7 +22,7 @@ function chunk<T>(arr: T[], n: number): T[][] {
 function Thumb({ src, alt, onOpen }: { src: string; alt: string; onOpen: () => void }) {
   const [ratio, setRatio] = useState(1);
   return (
-    <button className="thumb" style={{ flex: `${ratio} 1 0`, aspectRatio: ratio }} onClick={onOpen}>
+    <button className="thumb" style={{ flex: `${ratio * 100} 1 0` }} /* ×100：flex-grow 总和小于 1 时不会占满整行 */ onClick={onOpen}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}

@@ -40,6 +40,11 @@ export const SITE = {
 export const POSTS: Post[] = [
   {
     type: "text",
+    date: "2026-10-14",
+    text: "满心开心快乐，平平淡淡才是真。",
+  },
+  {
+    type: "text",
     date: "2026-10-12",
     text: "今天的晚霞是蜜桃色的，和这个网站一样 🍑",
   },
@@ -63,6 +68,6 @@ export const POSTS: Post[] = [
   {
     type: "photo",
     date: "2026-10-01",
-    photos: ["/media/photo-4.svg"],
+    photos: ["/media/photo-4.jpg"],
   },
 ];
